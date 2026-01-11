@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Junior vs Tiger – Swing Report</title>
+
+    <!-- Bootstrap v5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: radial-gradient(circle at top left, #132238, #050910 55%);
+        color: #f8f9fa;
+        min-height: 100vh;
+      }
+      .page-wrapper {
+        padding-block: 3rem;
+      }
+      .analysis-card {
+        border-radius: 1rem;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+        overflow: hidden;
+      }
+      .analysis-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .badge-tag {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.7rem;
+      }
+      .comparison-table,
+      .drills-table {
+        color: #e9ecef;
+      }
+      .comparison-table th,
+      .drills-table th {
+        background: rgba(13, 110, 253, 0.2);
+        border-color: rgba(255, 255, 255, 0.08);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.8rem;
+		color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
+      }
+      .comparison-table td,
+      .drills-table td {
+        border-color: rgba(255, 255, 255, 0.08);
+        vertical-align: top;
+        background: rgba(11, 18, 30, 0.9);
+		color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
+		font-size:14px !important;
+      }
+      .frame-img {
+        border-radius: 0.75rem;
+        max-height: 380px;
+        width: auto;
+        display: block;
+        margin-inline: auto;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .frame-img:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      }
+      .section-label  {
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.7;
+		color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
+      }
+	  
+	  .card-body{
+	   color: rgba(var(--bs-secondary-rgb),1)!important;
+	  }
+	  
+      .analysis-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+      }
+      .analysis-bullets li {
+        margin-bottom: 0.15rem;
+      }
+      @media (max-width: 768px) {
+        .comparison-table,
+        .comparison-table thead,
+        .comparison-table tbody,
+        .comparison-table th,
+        .comparison-table td,
+        .comparison-table tr {
+          display: block;
+        }
+        .comparison-table thead {
+          display: none;
+        }
+        .comparison-table tr {
+          margin-bottom: 1.5rem;
+        }
+      }
+      .modal-dark .modal-content {
+        background-color: #111827;
+        color: #f9fafb;
+        border-radius: 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+		width:50% !important;
+      }
+      .modal-dark .btn-close {
+        filter: invert(1) grayscale(100%);
+      }
+      .zoom-img {
+        width: 100%;
+        height: auto;
+        border-radius: 0.75rem;
+      }
+      .nav-tabs .nav-link.active {
+        background-color: rgba(13,110,253,0.15);
+        border-color: rgba(255,255,255,0.15);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-lg-11">
+            <div class="card bg-dark bg-opacity-75 text-light analysis-card">
+              <div
+                class="card-header bg-transparent px-4 py-3 analysis-header d-flex justify-content-between align-items-center"
+              >
+                <div>
+                  <div
+                    class="badge bg-info-subtle text-info-emphasis badge-tag mb-1"
+                  >
+                    Junior vs Tour Pro
+                  </div>
+                  <h1 class="h4 mb-0">
+                    Swing Report – Your Son vs Tiger Woods
+                  </h1>
+                  <p class="mb-0 text-secondary small">
+                    Face-on iron swings compared at key checkpoints, plus an actionable drill plan.
+                  </p>
+                </div>
+                <div class="text-end d-none d-md-block small">
+                  <span class="section-label d-block">Reference Pro</span>
+                  <span class="fw-semibold">Tiger Woods</span>
+                  <span class="d-block text-secondary">PGA Tour</span>
+                </div>
+              </div>
+
+              <div class="card-body px-4 pt-4 pb-3">
+
+                <!-- Tabs -->
+                <ul class="nav nav-tabs mb-3" id="reportTabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="comparison-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#comparison"
+                      type="button"
+                      role="tab"
+                      aria-controls="comparison"
+                      aria-selected="true"
+                    >
+                      Comparison
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="drills-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#drills"
+                      type="button"
+                      role="tab"
+                      aria-controls="drills"
+                      aria-selected="false"
+                    >
+                      Drills & Training Plan
+                    </button>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="reportTabsContent">
+                  <!-- Comparison Tab -->
+                  <div
+                    class="tab-pane fade show active"
+                    id="comparison"
+                    role="tabpanel"
+                    aria-labelledby="comparison-tab"
+                  >
+                    <p class="small text-secondary mb-3">
+                      Each row compares the same stage of the swing: setup,
+                      takeaway, top, transition, delivery, and finish. The right
+                      column highlights what Tiger is doing that your son can copy,
+                      with emphasis on posture, hip depth, rotation, and controlling
+                      early extension.
+                    </p>
+
+                    <div
+                      class="alert alert-info bg-opacity-10 border-0 text-info small mb-4"
+                    >
+                      <strong>How to use this:</strong> Before each practice,
+                      review one row at a time and focus on copying just
+                      <em>one</em> Tiger move (for example, setup posture in Frame 1).
+                      Then record a few swings and compare again.
+                    </div>
+
+                    <div class="table-responsive">
+                      <table
+                        class="table comparison-table align-middle mb-0"
+                        style="width: 100%;"
+                      >
+                        <thead>
+                          <tr>
+                            <th style="width: 8%;">Frame</th>
+                            <th style="width: 24%;">Your Son</th>
+                            <th style="width: 24%;">Tiger Woods</th>
+                            <th>Comparison Notes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- Frame 1 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 1</div>
+                              <div class="">Setup / Address</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_1.png"
+                                alt="Son – Setup"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_1.png"
+                                alt="Tiger – Setup"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Setup Posture & Hip Depth
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Stands more upright
+                                  with less hip hinge; hips are closer to the ball
+                                  and hands ride a bit high.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> More forward bend from the
+                                  hips, chest over the ball, hips pushed slightly
+                                  back creating clear hip depth.
+                                </li>
+                                <li>
+                                  Tiger’s arms hang naturally under his shoulders;
+                                  your son’s are a little more “reaching,” which
+                                  encourages standing up through the swing.
+                                </li>
+                                <li>
+                                  Early extension is often “pre-programmed” at
+                                  address – copying Tiger’s hip hinge and arm hang
+                                  here will make the rest of the swing easier.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <!-- Frame 2 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 2</div>
+                              <div class="">Takeaway / Early Backswing</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_2.png"
+                                alt="Son – Takeaway"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_2.png"
+                                alt="Tiger – Takeaway"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Connection & First Move
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Club and arms lift a
+                                  bit more vertically; trail hip hasn’t really
+                                  moved back yet, so the pelvis is already inching
+                                  toward the ball.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> Club, hands, and chest
+                                  move together; his lead arm stays connected to
+                                  his chest and the club stays outside his hands.
+                                </li>
+                                <li>
+                                  Tiger’s trail hip is beginning to rotate
+                                  <em>back</em> behind him, preserving hip depth.
+                                </li>
+                                <li>
+                                  Goal cue: “Turn everything together and let the
+                                  right hip move behind you,” copying Tiger’s first
+                                  move instead of lifting the arms.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <!-- Frame 3 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 3</div>
+                              <div class="">Top of Backswing</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_3.png"
+                                alt="Son – Top of Backswing"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_3.png"
+                                alt="Tiger – Top of Backswing"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Depth, Turn & Arm Structure
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Upper body has turned,
+                                  but hips haven’t rotated as fully; trail leg may
+                                  straighten without the right hip moving back,
+                                  reducing available space.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> Upper body and hips are
+                                  both fully coiled; belt buckle has turned away
+                                  from the target while maintaining posture.
+                                </li>
+                                <li>
+                                  Tiger’s lead arm is across his chest and club
+                                  shaft is on-plane; your son’s arms may appear
+                                  steeper or more lifted relative to his chest.
+                                </li>
+                                <li>
+                                  The more “around” turn from Tiger makes it easy
+                                  to shallow the club and rotate through without
+                                  standing up – exactly what we want your son to
+                                  feel.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <!-- Frame 4 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 4</div>
+                              <div class="">Transition / Start Down</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_4.png"
+                                alt="Son – Transition"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_4.png"
+                                alt="Tiger – Transition"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Pressure Shift vs Hip Thrust
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Hips begin to move
+                                  <em>toward</em> the ball early; spine angle starts
+                                  to rise and the knees drive toward the ball line.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> Pressure shifts into the
+                                  lead foot while the hips stay back and begin to
+                                  rotate; his belt buckle is turning, not jumping
+                                  toward the ball.
+                                </li>
+                                <li>
+                                  Tiger keeps his chest in its tilt while the lower
+                                  body unwinds – this separation is a huge key to
+                                  avoiding early extension.
+                                </li>
+                                <li>
+                                  Coaching cue: “Shift, then turn” versus “jump
+                                  toward the ball”; copy Tiger’s feel of rotating
+                                  around a stable spine angle.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <!-- Frame 5 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 5</div>
+                              <div class="">Delivery / Pre-Impact</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_5.png"
+                                alt="Son – Delivery"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_5.png"
+                                alt="Tiger – Delivery"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Space for the Arms & Club Path
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Because the hips have
+                                  moved closer to the ball, the arms are forced to
+                                  work more vertically with less room between hands
+                                  and body.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> Hips have cleared but
+                                  stayed back, leaving space for the hands to
+                                  shallow underneath and travel through impact.
+                                </li>
+                                <li>
+                                  Tiger’s lead wrist is flatter and clubface more
+                                  stable; your son may need to “flip” more due to
+                                  crowding and lack of rotation.
+                                </li>
+                                <li>
+                                  Goal: Use the drills to maintain hip depth like
+                                  Tiger so your son can swing “around” instead of
+                                  “up and at” the ball.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <!-- Frame 6 -->
+                          <tr>
+                            <td>
+                              <div class="section-label mb-1">Frame 6</div>
+                              <div class="">Post-Impact / Finish</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="son/frame_6.png"
+                                alt="Son – Finish"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Your Son</div>
+                            </td>
+                            <td class="text-center">
+                              <img
+                                src="tiger/frame_6.png"
+                                alt="Tiger – Finish"
+                                class="frame-img zoomable-img"
+                                data-bs-toggle="modal"
+                                data-bs-target="#zoomModal"
+                              />
+                              <div class="section-label mt-2">Tiger Woods</div>
+                            </td>
+                            <td>
+                              <div class="analysis-title">
+                                Rotation Through the Ball
+                              </div>
+                              <ul class="analysis-bullets  ">
+                                <li>
+                                  <strong>Your son:</strong> Good natural
+                                  athleticism; finishes in balance but with earlier
+                                  loss of posture, so rotation happens from a more
+                                  upright position.
+                                </li>
+                                <li>
+                                  <strong>Tiger:</strong> Chest and belt buckle are
+                                  fully rotated toward the target, trail foot
+                                  released, and posture has been maintained much
+                                  longer through impact.
+                                </li>
+                                <li>
+                                  Tiger’s finish is the result of everything before
+                                  it: strong setup, deep turn, hips staying back,
+                                  and continuous rotation.
+                                </li>
+                                <li>
+                                  Use Tiger’s finish as a “pose” for your son to
+                                  copy – if he can hold that balanced, fully
+                                  rotated finish, the motion leading into it will
+                                  improve too.
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Drills Tab -->
+                  <div
+                    class="tab-pane fade"
+                    id="drills"
+                    role="tabpanel"
+                    aria-labelledby="drills-tab"
+                  >
+                    <p class="small text-secondary mb-3">
+                      These drills are mapped directly to the frames in the
+                      comparison tab. Work on one or two at a time, keeping
+                      sessions short and focused.
+                    </p>
+
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="card bg-transparent border-secondary border-opacity-25 h-100">
+                          <div class="card-body p-3">
+                            <div class="section-label mb-1">Drill 1</div>
+                            <h2 class="h6 mb-2">
+                              Butt-on-the-Wall <span class="text-secondary">(Frames 1 & 4)</span>
+                            </h2>
+                            <p class="small mb-2">
+                              Improves hip depth and prevents early extension.
+                            </p>
+                            <ul class="small mb-2">
+                              <li>Set up with glutes lightly touching a wall.</li>
+                              <li>Rehearse takeaway and backswing while keeping the hips in contact with the wall.</li>
+                              <li>In transition, feel the hips rotating while staying “back,” rather than jumping toward the ball.</li>
+                            </ul>
+                            <p class="small text-secondary mb-0">
+                              Key feel: “Turn around the wall, don’t jump off it.”
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="card bg-transparent border-secondary border-opacity-25 h-100">
+                          <div class="card-body p-3">
+                            <div class="section-label mb-1">Drill 2</div>
+                            <h2 class="h6 mb-2">
+                              Chair Behind Hips <span class="text-secondary">(Frames 1–5)</span>
+                            </h2>
+                            <p class="small mb-2">
+                              Trains rotation instead of thrusting the hips toward the ball.
+                            </p>
+                            <ul class="small mb-2">
+                              <li>Place a chair just behind the hips at address.</li>
+                              <li>Make slow-motion backswings and downswings without slamming the hips into the chair.</li>
+                              <li>If he hits the chair on the way down, he is jumping toward the ball instead of rotating.</li>
+                            </ul>
+                            <p class="small text-secondary mb-0">
+                              Key feel: “Clear the hips around the chair, not into it.”
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="card bg-transparent border-secondary border-opacity-25 h-100">
+                          <div class="card-body p-3">
+                            <div class="section-label mb-1">Drill 3</div>
+                            <h2 class="h6 mb-2">
+                              Connected Takeaway <span class="text-secondary">(Frame 2)</span>
+                            </h2>
+                            <p class="small mb-2">
+                              Matches Tiger’s connected first move.
+                            </p>
+                            <ul class="small mb-2">
+                              <li>Place a small towel under both armpits.</li>
+                              <li>Move chest, hands, and club together for the first 2–3 feet of the backswing.</li>
+                              <li>Keep the towel in place as long as possible without squeezing too hard.</li>
+                            </ul>
+                            <p class="small text-secondary mb-0">
+                              Key feel: “Chest and hands move together; arms don’t fly away from the body.”
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="card bg-transparent border-secondary border-opacity-25 h-100">
+                          <div class="card-body p-3">
+                            <div class="section-label mb-1">Drill 4</div>
+                            <h2 class="h6 mb-2">
+                              Lead-Side Rotation <span class="text-secondary">(Frames 4–6)</span>
+                            </h2>
+                            <p class="small mb-2">
+                              Helps maintain posture and improve rotation through impact.
+                            </p>
+                            <ul class="small mb-2">
+                              <li>Without a ball, rehearse from the top of the backswing.</li>
+                              <li>Feel the belt buckle turning toward the target while the chest stays in its tilt.</li>
+                              <li>Finish with chest and hips fully facing the target, in balance.</li>
+                            </ul>
+                            <p class="small text-secondary mb-0">
+                              Key feel: “Belt buckle leads, chest follows – both stay down and around, not up and at the ball.”
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <div class="card bg-transparent border-secondary border-opacity-25">
+                          <div class="card-body p-3">
+                            <div class="section-label mb-1">Drill 5</div>
+                            <h2 class="h6 mb-2">
+                              Pose the Finish <span class="text-secondary">(Frame 6)</span>
+                            </h2>
+                            <p class="small mb-2">
+                              Trains sequence, balance, and awareness of a tour-level finish position.
+                            </p>
+                            <ul class="small mb-2">
+                              <li>Use Tiger’s finish frame as the reference picture.</li>
+                              <li>Have him swing at 50–70% speed and hold the finish for a full 3 seconds.</li>
+                              <li>Check: weight on lead side, trail foot released, chest and belt buckle at the target.</li>
+                            </ul>
+                            <p class="small text-secondary mb-0">
+                              Key feel: “Finish like Tiger and freeze – if the finish is right, the motion into it will keep improving.”
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr class="border-secondary border-opacity-50 my-4" />
+
+                    <div class="row g-3 small">
+                      <div class="col-md-6">
+                        <div class="section-label mb-1">Weekly structure</div>
+                        <ul class="mb-0">
+                          <li>2–3 sessions per week, 20–30 minutes each.</li>
+                          <li>Pick one frame and one drill per session (for example, Frame 1 + Butt-on-the-Wall).</li>
+                          <li>Finish each session with 5–10 “pose the finish” swings.</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="section-label mb-1">Progress tracking</div>
+                        <ul class="mb-0">
+                          <li>Re-film the swing every 2–3 weeks from the same face-on angle.</li>
+                          <li>Compare to this report and look for improved hip depth and posture through impact.</li>
+                          <li>Celebrate visible improvements to keep him engaged and confident.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="text-center mt-3 small text-secondary">
+              Junior vs Tiger comparison · Bootstrap 5.3 layout with tabs & drills
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zoom Modal -->
+    <div
+      class="modal fade modal-dark"
+      id="zoomModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title small" id="zoomCaption">Frame Preview</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body pt-0">
+            <img src="" alt="Zoomed frame" class="zoom-img" id="zoomImage" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var zoomImage = document.getElementById("zoomImage");
+        var zoomCaption = document.getElementById("zoomCaption");
+        var zoomables = document.querySelectorAll(".zoomable-img");
+
+        zoomables.forEach(function (img) {
+          img.addEventListener("click", function () {
+            var src = img.getAttribute("src");
+            var alt = img.getAttribute("alt") || "Frame Preview";
+            zoomImage.setAttribute("src", src);
+            zoomCaption.textContent = alt;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
