@@ -87,22 +87,7 @@
       .analysis-bullets li {
         margin-bottom: 0.15rem;
       }
-      @media (max-width: 768px) {
-        .comparison-table,
-        .comparison-table thead,
-        .comparison-table tbody,
-        .comparison-table th,
-        .comparison-table td,
-        .comparison-table tr {
-          display: block;
-        }
-        .comparison-table thead {
-          display: none;
-        }
-        .comparison-table tr {
-          margin-bottom: 1.5rem;
-        }
-      }
+      
       .modal-dark .modal-content {
         background-color: #111827;
         color: #f9fafb;
@@ -121,6 +106,31 @@
       .nav-tabs .nav-link.active {
         background-color: rgba(13,110,253,0.15);
         border-color: rgba(255,255,255,0.15);
+      }
+	  
+	  @media (max-width: 768px) {
+        .comparison-table,
+        .comparison-table thead,
+        .comparison-table tbody,
+        .comparison-table th,
+        .comparison-table td,
+        .comparison-table tr {
+          display: block;
+        }
+        .comparison-table thead {
+          display: none;
+        }
+        .comparison-table tr {
+          margin-bottom: 1.5rem;
+        }
+		
+		 .modal-dark .modal-content {
+        background-color: #111827;
+        color: #f9fafb;
+        border-radius: 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+		width:50% !important;
+      }
       }
     </style>
   </head>
